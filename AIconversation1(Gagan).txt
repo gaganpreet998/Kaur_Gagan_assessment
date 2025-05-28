@@ -1,0 +1,98 @@
+1. Exploring WeatherWrapper usage.txt
+
+Question 1: How can i fetch weather data for a city for the next 2 days using the fetch-my-weather package?
+Source: Chatgpt
+Answer:Great question! Here's how you can fetch weather data for a city for the next 2 days using the fetch-my-weather package:
+
+from fetch_my_weather import get_weather
+
+# Fetch weather for "Sydney" for the next 2 days
+weather_data = get_weather("Sydney", days=2)
+
+print(weather_data)
+Explanation:
+> get_weather is the main function to request weather data.
+
+> The first argument is the location (city name as a string).
+
+> The days parameter specifies how many days of forecast you want (default is usually 2).
+
+> The function returns a dictionary containing weather details including forecasts for each day.
+
+
+
+
+
+
+Question 2: What does the returned data structure look like?
+Source: chatgpt
+Answer: Sure! When you call get_weather("Sydney", days=2) from the fetch-my-weather package, the returned data is typically a dictionary structured like this:
+
+{
+  'location': {
+    'name': 'Sydney',
+    'country': 'Australia',
+    'latitude': -33.86,
+    'longitude': 151.21,
+  },
+  'current': {
+    'temperature': 22,        # current temperature in Celsius
+    'condition': 'Sunny',     # weather condition description
+    'humidity': 60,
+    'wind_speed': 10,
+  },
+  'forecast': [
+    {
+      'date': '2025-05-23',
+      'temperature_high': 25,
+      'temperature_low': 15,
+      'precipitation_chance': 0.2,   # 20% chance of rain
+      'condition': 'Partly cloudy',
+    },
+    {
+      'date': '2025-05-24',
+      'temperature_high': 23,
+      'temperature_low': 16,
+      'precipitation_chance': 0.5,   # 50% chance of rain
+      'condition': 'Rain showers',
+    }
+  ]
+}
+Key points:
+> location: info about the place.
+
+> current: current weather details.
+
+> forecast: a list of dictionaries for each forecast day, including date, temperatures, precipitation chances, and conditions.
+
+This structure lets you easily access daily weather info for the next 2 days or however many you request.
+
+
+
+
+
+
+Question 3: What if the city is invalid or misspelled?
+Source: Chatgpt
+Answer: Great question! If the city is invalid or misspelled when you use get_weather(), here’s what typically happens with fetch-my-weather:
+
+> The function may raise an exception (like a ValueError or HTTPError), indicating the location wasn’t found.
+
+> Or it might return an error message or empty data depending on how the package handles errors internally.
+
+What you should do:
+> Add error handling in your code using try-except blocks.
+
+> If an exception occurs, catch it and inform the user with a friendly message like:
+"Sorry, I couldn't find the location you entered. Please check the spelling and try again."
+
+Example:
+
+from fetch_my_weather import get_weather
+
+try:
+    weather_data = get_weather("InvalidCityName", days=2)
+except Exception as e:
+    print("Error fetching weather data:", e)
+    print("Please check the location and try again.")
+This way, your program won’t crash and can guide the user to enter a valid city name.
